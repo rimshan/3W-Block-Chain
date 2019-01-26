@@ -179,6 +179,7 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class
 
     ],
 
