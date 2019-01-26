@@ -45,9 +45,19 @@ class LoginController extends Controller
         } catch (Exception $e) {
             return redirect('/login');
         }
-        $authUser = $this->findOrCreateUser($user, $provider);
-        Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+//        $authUser = $this->findOrCreateUser($user, $provider);
+//        Auth::login($authUser, true);
+        $existingUser = User::where('email', $user->email)->first();
+        if($existingUser){
+            Auth::login($existingUser, true);
+        }else{
+            $newUser = new User;
+            $newUser->name = $user->name;
+            $newUser->email = $user->email;
+            $newUser->save();
+            Auth::login($existingUser, true);
+        }
+        return redirect('/home');
     }
     public function findOrCreateUser($providerUser, $provider)
     {
